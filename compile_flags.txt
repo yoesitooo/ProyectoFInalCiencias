@@ -1,0 +1,11 @@
+-xc++
+-std=c++17
+-Wall
+-Wextra
+--target=x86_64-w64-mingw32
+-nostdinc++
+-isystemC:/Users/User/herramientas_c/w64devkit/lib/gcc/x86_64-w64-mingw32/16.2.0/include/c++
+-isystemC:/Users/User/herramientas_c/w64devkit/lib/gcc/x86_64-w64-mingw32/16.2.0/include/c++/x86_64-w64-mingw32
+-isystemC:/Users/User/herramientas_c/w64devkit/lib/gcc/x86_64-w64-mingw32/16.2.0/include/c++/backward
+-isystemC:/Users/User/herramientas_c/w64devkit/include
+-isystemC:/Users/User/herramientas_c/raylib-6.2_win64_mingw-w64/include

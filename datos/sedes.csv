@@ -1,0 +1,23 @@
+# Sedes. Formato: nombre;direccion;x;y   (x,y = pixel en datos/mapa.png)
+# Para agregar una sede: abra el programa, ponga el mouse sobre el lugar y copie el x,y
+# que aparece abajo del mapa.
+Sede Calle 34;Calle 34 # 13-13;3102;982
+Sede Calle 40 Administrativa;Carrera 7 # 40B-53;3172;841
+Sede Calle 40 Ingenieria;Carrera 8 # 40-62;3161;846
+Sede Macarena A;Carrera 3 # 26A-40;3217;1163
+Sede Macarena B;Carrera 4A # 26D-54;3179;1180
+Facultad de Artes ASAB;Carrera 13 # 14-69;2878;1394
+Sede Vivero;Carrera 5 Este # 15-82;3188;1541
+Sede Aduanilla de Paiba;Calle 13 # 31-75;2510;1163
+Facultad Tecnologica;Calle 68D Bis A Sur # 49F-70;1010;1982
+Sede Ensueno;Diagonal 68D Sur (El Ensueno) - ubicacion aproximada;1030;1876
+Sede Bosa El Porvenir;Calle 52 Sur # 93D-97;370;632
+Sede Candelaria;Calle 12 # 4-30;3017;1555
+Sede Crisanto Luque;Carrera 10 # 19-62;2994;1324
+Sede Santo Domingo;Calle 52 # 7-11;3225;602
+Academia Luis A. Calvo;Carrera 9 # 52-52;3208;595
+ILUD Sede San Luis;Calle 59 # 17-19;3109;404
+Editorial UD;Carrera 24 # 34-37;2933;934
+Sede Sotanos Av. Jimenez;Carrera 7 # 12C-59;2981;1476
+Emisora LAUD;Calle 31 # 6-42;3124;1096
+ECCI Sede S;Carrera 16 # 50-39;3112;623

@@ -1,0 +1,19 @@
+# Ejecutables (se generan con compilar.bat o make)
+enrutador.exe
+enrutador
+*.o
+build/
+
+# Descargas y archivos temporales de la herramienta de datos
+herramientas/cache/
+__pycache__/
+
+# Capturas de prueba (enrutador.exe --captura)
+/captura*.png
+
+# Guia de la sustentacion (solo local)
+docs/
+
+# Editor
+.vscode/
+.cache/

@@ -1,0 +1,24 @@
+# Sedes de la Universidad Distrital (y Sede S de la ECCI)
+# Formato: nombre;direccion;latitud;longitud
+# Coordenadas tomadas de OpenStreetMap (edificio o cruce de calles de la direccion).
+# El programa conecta cada sede a la red vial automaticamente; para agregar una sede basta una linea nueva.
+Sede Calle 34;Calle 34 # 13-13;4.62202;-74.06852
+Sede Calle 40 Administrativa;Carrera 7 # 40B-53;4.62806;-74.06554
+Sede Calle 40 Ingenieria;Carrera 8 # 40-62;4.62785;-74.06600
+Sede Macarena A;Carrera 3 # 26A-40;4.61427;-74.06359
+Sede Macarena B;Carrera 4A # 26D-54;4.61354;-74.06523
+Facultad de Artes ASAB;Carrera 13 # 14-69;4.60441;-74.07816
+Sede Vivero;Carrera 5 Este # 15-82;4.59811;-74.06485
+Sede Aduanilla de Paiba;Calle 13 # 31-75;4.61430;-74.09395
+Facultad Tecnologica;Calle 68D Bis A Sur # 49F-70;4.57926;-74.15831
+Sede Ensueno;Diagonal 68D Sur (El Ensueno) - ubicacion aproximada;4.58378;-74.15745
+Sede Bosa El Porvenir;Calle 52 Sur # 93D-97;4.63701;-74.18579
+Sede Candelaria;Calle 12 # 4-30;4.59750;-74.07218
+Sede Crisanto Luque;Carrera 10 # 19-62;4.60739;-74.07318
+Sede Santo Domingo;Calle 52 # 7-11;4.63828;-74.06325
+Academia Luis A. Calvo;Carrera 9 # 52-52;4.63860;-74.06398
+ILUD Sede San Luis;Calle 59 # 17-19;4.64675;-74.06825
+Editorial UD;Carrera 24 # 34-37;4.62410;-74.07578
+Sede Sotanos Av. Jimenez;Carrera 7 # 12C-59;4.60088;-74.07374
+Emisora LAUD;Calle 31 # 6-42;4.61713;-74.06758
+ECCI Sede S;Carrera 16 # 50-39;4.63738;-74.06810

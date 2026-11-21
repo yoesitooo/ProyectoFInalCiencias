@@ -1,0 +1,21 @@
+# ============================================================================
+#  HORARIO DE CLASES (ejemplo). Se puede editar con el programa abierto.
+#  Formato:  dia; inicio; fin; sede; materia
+#  Dias: lunes, martes, miercoles, jueves, viernes, sabado.
+#  Las sedes se escriben igual que en datos/sedes.csv.
+#
+#  El programa calcula cada traslado entre dos clases seguidas en sedes distintas:
+#  sale al terminar la primera clase (con el trafico y las contingencias de esa hora)
+#  y dice en que modos se llega a tiempo a la siguiente.
+# ============================================================================
+
+lunes; 07:00; 09:00; Sede Calle 40 Ingenieria; Ciencias de la Computación I
+lunes; 09:30; 11:00; Sede Macarena A; Cálculo Integral
+lunes; 14:00; 16:00; Facultad Tecnologica; Física II
+
+martes; 06:00; 08:00; Sede Aduanilla de Paiba; Biblioteca - lectura
+martes; 08:30; 10:00; Sede Calle 40 Ingenieria; Programación Avanzada
+martes; 17:00; 19:00; Sede Bosa El Porvenir; Electiva
+
+miercoles; 10:00; 12:00; Facultad de Artes ASAB; Cátedra Francisco José de Caldas
+miercoles; 12:30; 14:00; Sede Candelaria; Álgebra Lineal

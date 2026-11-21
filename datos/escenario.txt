@@ -1,0 +1,44 @@
+# ============================================================================
+#  ESCENARIO: UN DIA HABIL CUALQUIERA EN BOGOTA (ejemplo inventado para la simulacion)
+#  Este archivo se puede editar con el programa abierto: al guardarlo, las rutas
+#  se recalculan solas (o presione R en la ventana).
+#
+#  Una orden por linea, campos separados por punto y coma. Las lineas que
+#  empiezan con # son comentarios.
+#
+#  hora;            HH:MM                                 hora con la que arranca la simulacion
+#  marcha;          <lugar>; <radio en metros> [; franja] trafico muy lento en la zona
+#  bloqueo;         <lugar>; <radio en metros> [; franja] zona cerrada (solo se pasa a pie)
+#  cerrar_via;      <nombre de la via> [; franja]          ej. obras en toda la via
+#  congestion;      <nombre de la via>; <factor> [; franja] 3 = el triple de tiempo en carro y moto
+#  cerrar_estacion; <estacion o sede> [; franja]
+#
+#  [franja] es opcional, por ejemplo 10:00-13:00. Sin franja, el evento dura todo el dia.
+#  <lugar> = nombre de una sede o estacion de TransMilenio, o coordenadas "x,y"
+#            del mapa (aparecen abajo a la izquierda de la ventana al mover el mouse).
+#  Los nombres de via son los de OpenStreetMap: la Caracas es "Avenida Carrera 14",
+#  la 26 es "Avenida Calle 26", la Septima es "Avenida Carrera 7", la NQS es "Avenida Carrera 30".
+#
+#  El trafico normal de cada hora (hora pico 6-9 a.m. y 4-8 p.m.) ya esta en el programa;
+#  aqui solo van los imprevistos.
+# ============================================================================
+
+hora; 07:00
+
+# Choque en la NQS en la hora pico de la manana
+congestion; Avenida Carrera 30; 2; 06:30-09:00
+
+# Marcha estudiantil que sale de la Universidad Nacional y llega a la Plaza de Bolivar
+marcha; Universidad Nacional; 500; 10:00-12:00
+marcha; 2926,1541; 400; 12:00-15:00
+
+# La estacion Museo Nacional se cierra mientras pasa la marcha
+cerrar_estacion; Museo Nacional; 11:00-14:00
+
+# Bloqueo en la Avenida Calle 13 por la tarde (Puente Aranda)
+bloqueo; Sede Aduanilla de Paiba; 300; 16:00-19:00
+
+# Mas ejemplos (quite el # para activarlos):
+# cerrar_via; Avenida Carrera 7
+# congestion; Avenida Carrera 14; 3
+# bloqueo; Ricaurte; 300; 07:00-09:00

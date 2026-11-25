@@ -4,7 +4,3 @@
 
 # Archivos binarios
 *.png binary
-
-# La herramienta de extraccion de datos (Python) no hace parte del programa:
-# no se cuenta en la barra de lenguajes de GitHub
-herramientas/** linguist-vendored

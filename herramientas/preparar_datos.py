@@ -355,8 +355,8 @@ def normalizar_estacion(nombre):
 
 def descomponer_expresos(pares, estaciones):
     """Un expreso A->C que pasa por la estacion B (sin parar) se reemplaza por A->B y B->C, y sus
-    servicios se suman a esos tramos. Asi cada tramo une estaciones vecinas y la 'interseccion de
-    servicios' del programa encuentra buses que sirven varias paradas seguidas (menos transbordos)."""
+    servicios se suman a esos tramos. Asi cada tramo une estaciones vecinas y el mismo
+    servicio queda seguido por varias paradas (menos transbordos)."""
     def d(a, b):
         return distancia_m(estaciones[a][1], estaciones[a][2], estaciones[b][1], estaciones[b][2])
 

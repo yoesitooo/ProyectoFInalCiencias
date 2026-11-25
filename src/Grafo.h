@@ -86,7 +86,7 @@ public:
     int agregarTrazado(const Arreglo<Punto>& trazado);
     Punto punto(int i) const;
 
-    // Nombres de vias sin repetir ("Avenida Caracas" -> 12) con una tabla hash
+    // Nombres de vias sin repetir ("Avenida Carrera 14" -> 12) con una tabla hash
     int indiceVia(const std::string& nombre);          // lo agrega si es nuevo
     int buscarVia(const std::string& nombre) const;    // -1 si no existe
     const std::string& nombreVia(int indice) const;

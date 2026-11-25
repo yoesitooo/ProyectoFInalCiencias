@@ -67,6 +67,13 @@ int Enrutador::aplicarEventos() {
             aplicarZona(e);
         } else if (e.tipo == EV_CERRAR_LUGAR) {
             grafo.vertice(e.vertice).activo = false;
+            // Si es una estacion tampoco se puede bajar ahi: se cierran las salidas de sus "estacion|servicio"
+            for (Arista* a = grafo.vertice(e.vertice).primera; a != nullptr; a = a->siguiente) {
+                if (a->tipo != TM_ABORDAR) continue;
+                for (Arista* s = grafo.vertice(a->destino).primera; s != nullptr; s = s->siguiente) {
+                    if (s->tipo == TM_SALIDA) s->cerrada = true;
+                }
+            }
         } else {
             // cerrar_via o congestion: todas las aristas que tienen ese nombre de via
             for (int u = 0; u < grafo.numVertices(); u++) {

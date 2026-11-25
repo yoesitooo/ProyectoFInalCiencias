@@ -3,7 +3,7 @@
 static const double FACTOR_CARGA_MAXIMO = 0.75;
 
 TablaHash::TablaHash(int cubetasIniciales) : cubetasTotales(cubetasIniciales), cantidad(0) {
-    if (cubetasTotales < 1) cubetasTotales = 31;
+    if (cubetasTotales < 1) cubetasTotales = 37;
     cubetas = new Nodo*[cubetasTotales];
     for (int i = 0; i < cubetasTotales; i++) {
         cubetas[i] = nullptr;

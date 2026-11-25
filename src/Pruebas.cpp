@@ -79,7 +79,7 @@ static void probarHash() {
     comprobar(t.eliminar("Estacion 7") && t.buscar("Estacion 7") == -1, "eliminar");
 }
 
-// Grafo de prueba (via terciaria, carro a 18 km/h):
+// Grafo de prueba (via terciaria, carro a 26 km/h sin trafico):
 //        A --1000 m--> B --1000 m--> D
 //        A --500 m---> C --3000 m--> D
 static void probarDijkstra() {

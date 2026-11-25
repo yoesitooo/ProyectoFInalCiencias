@@ -209,6 +209,7 @@ enrutador.exe --pruebas   25 pruebas automáticas
 - Hora: botones `−`/`+` o flechas ←/→. *Simular día* o la tecla `Espacio` adelantan el reloj 15 min cada 0.4 s.
 - Gráfica "Tiempo según la hora de salida": clic en una barra para salir a esa hora.
 - Contingencias: *Marcha* (`M`) o *Bloqueo* (`B`) y clic en el mapa; clic dentro de una zona la quita.
+  *Estación* (`E`) y clic en una estación la cierra (queda gris); otro clic la abre.
 - Pestaña **Mi horario**: clic en un traslado para verlo en el mapa.
 - Mapa: rueda para zoom, arrastrar para mover, `F` para centrar. `R` recarga los archivos.
 

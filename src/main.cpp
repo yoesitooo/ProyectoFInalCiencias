@@ -107,7 +107,7 @@ static void menuConsola(Enrutador& e, const std::string& carpeta) {
                   << " 6. Horario de clases: traslados entre sedes\n"
                   << " 0. Salir\n";
         std::string opcion = leerLinea("Opcion: ");
-        if (opcion == "0") return;
+        if (opcion == "0" || !std::cin) return;   // !cin: se acabo la entrada (Ctrl+Z)
         if (opcion == "1") {
             listarSedes(e);
             int origen = pedirLugar(e, "  Origen (numero o nombre): ");

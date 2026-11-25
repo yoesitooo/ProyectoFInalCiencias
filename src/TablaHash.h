@@ -12,11 +12,11 @@
 // Busqueda e insercion: O(1) en promedio, O(n) en el peor caso.
 //
 // En el proyecto traduce "Sede Calle 40 Ingenieria" o "Ricaurte" a su indice
-// en el grafo, y "Avenida Caracas" a su indice en la lista de nombres de vias.
+// en el grafo, y "Avenida Carrera 14" a su indice en la lista de nombres de vias.
 // ---------------------------------------------------------------------------
 class TablaHash {
 public:
-    explicit TablaHash(int cubetasIniciales = 31);
+    explicit TablaHash(int cubetasIniciales = 37);
     ~TablaHash();
 
     void insertar(const std::string& clave, int valor);  // si ya existe, actualiza el valor

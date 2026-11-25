@@ -1,7 +1,7 @@
 # Sedes de la Universidad Distrital (y Sede S de la ECCI)
 # Formato: nombre;direccion;latitud;longitud
 # Coordenadas tomadas de OpenStreetMap (edificio o cruce de calles de la direccion).
-# El programa conecta cada sede a la red vial automaticamente; para agregar una sede basta una linea nueva.
+# El programa conecta cada sede a la red vial automaticamente; para agregar una sede se agrega una linea y se vuelve a correr el script.
 Sede Calle 34;Calle 34 # 13-13;4.62202;-74.06852
 Sede Calle 40 Administrativa;Carrera 7 # 40B-53;4.62806;-74.06554
 Sede Calle 40 Ingenieria;Carrera 8 # 40-62;4.62785;-74.06600

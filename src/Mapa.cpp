@@ -41,7 +41,7 @@ static const Color COLOR_TM = {200, 16, 46, 255};
 static const Color VERDE = {22, 163, 74, 255};
 static const Color ROJO = {220, 38, 38, 255};
 
-enum Herramienta { NAVEGAR, PONER_MARCHA, PONER_BLOQUEO };
+enum Herramienta { NAVEGAR, PONER_MARCHA, PONER_BLOQUEO, CERRAR_ESTACION };
 enum Pestana { PESTANA_RUTA, PESTANA_HORARIO };
 
 // Un tramo para dibujar: posicion de su forma en Grafo::puntos
@@ -104,7 +104,7 @@ private:
 
     Arreglo<TramoDibujo> capaCiclo, capaTM, afectados;
     float scrollSedes, scrollPasos, scrollHorario;
-    int sedeBajoMouse;
+    int sedeBajoMouse, estacionBajoMouse;
     bool arrastrando;
     Vector2 inicioClic;
     std::string aviso;
@@ -124,6 +124,7 @@ private:
     void asignarSede(int vertice, int campo);
     void cambiarHora(int minuto);
     void contingenciasCambiaron();
+    void alternarEstacion(int vertice);
     void avisar(const std::string& texto);
     void revisarArchivos(bool forzar);
 
@@ -156,7 +157,7 @@ Mapa::Mapa(Enrutador& enrutador, const std::string& carpetaDatos)
       destino(-1), campoActivo(0), alternativas(true), verCiclo(false), verTM(false), herramienta(NAVEGAR),
       radio(400), pestana(PESTANA_RUTA), numRutas(0), rutaElegida(0), hayQueRecalcular(true), graficaSucia(true),
       simulando(false), ultimoPaso(0), horarioSucio(true), scrollSedes(0), scrollPasos(0), scrollHorario(0),
-      sedeBajoMouse(-1), arrastrando(false), avisoDesde(0), fechaEscenario(-1), fechaHorario(-1),
+      sedeBajoMouse(-1), estacionBajoMouse(-1), arrastrando(false), avisoDesde(0), fechaEscenario(-1), fechaHorario(-1),
       ultimaRevision(0) {
     archivoEscenario = carpeta + "/escenario.txt";
     archivoHorario = carpeta + "/horario.txt";
@@ -308,6 +309,34 @@ void Mapa::contingenciasCambiaron() {
     hayQueRecalcular = true;
     graficaSucia = true;
     horarioSucio = true;
+}
+
+// Clic en una estacion: si esta abierta se cierra (todo el dia); si se cerro con el mouse se reabre
+void Mapa::alternarEstacion(int vertice) {
+    const std::string& nombre = e.red().vertice(vertice).nombre;
+    for (int i = 0; i < e.numEventos(); i++) {
+        const Evento& ev = e.evento(i);
+        if (ev.tipo != EV_CERRAR_LUGAR || ev.vertice != vertice || !e.eventoActivo(ev)) continue;
+        if (ev.desdeArchivo) {
+            avisar("Esa estación está cerrada en escenario.txt: quítela del archivo");
+        } else {
+            e.quitarEvento(i);
+            avisar("Estación abierta: " + nombre);
+        }
+        return;
+    }
+    Evento ev;
+    ev.tipo = EV_CERRAR_LUGAR;
+    ev.centro = e.red().vertice(vertice).pos;
+    ev.radioMetros = 0;
+    ev.via = -1;
+    ev.factor = 1;
+    ev.vertice = vertice;
+    ev.desde = -1;
+    ev.hasta = -1;
+    ev.desdeArchivo = false;
+    e.agregarEvento(ev);
+    avisar("Estación cerrada: " + nombre);
 }
 
 void Mapa::avisar(const std::string& textoAviso) {
@@ -471,13 +500,16 @@ void Mapa::dibujarMarcadores() {
     Vector2 mouse = GetMousePosition();
     BeginScissorMode((int)area.x, 0, (int)area.width, (int)area.height);
 
-    if (verTM && camara.zoom > 0.55f) {
+    estacionBajoMouse = -1;
+    if ((verTM && camara.zoom > 0.55f) || herramienta == CERRAR_ESTACION) {
         for (int i = 0; i < e.numEstaciones(); i++) {
             const Vertice& v = g.vertice(e.estacion(i));
             Vector2 s = GetWorldToScreen2D(aVector(v.pos), camara);
             DrawCircleV(s, 4.5f, v.activo ? WHITE : Color{120, 120, 120, 255});
             DrawCircleLinesV(s, 4.5f, COLOR_TM);
-            if (camara.zoom > 1.6f) texto(v.nombre.c_str(), s.x + 7, s.y - 7, 13, COLOR_TM);
+            if (herramienta == CERRAR_ESTACION && CheckCollisionPointRec(mouse, area) &&
+                CheckCollisionPointCircle(mouse, s, 8)) estacionBajoMouse = e.estacion(i);
+            if (camara.zoom > 1.6f || estacionBajoMouse == e.estacion(i)) texto(v.nombre.c_str(), s.x + 7, s.y - 7, 13, COLOR_TM);
         }
     }
 
@@ -512,7 +544,7 @@ void Mapa::dibujarMarcadores() {
     }
 
     // Circulo de la protesta que se va a poner
-    if (herramienta != NAVEGAR && CheckCollisionPointRec(mouse, area)) {
+    if ((herramienta == PONER_MARCHA || herramienta == PONER_BLOQUEO) && CheckCollisionPointRec(mouse, area)) {
         Color c = (herramienta == PONER_BLOQUEO) ? COLOR_BLOQUEO : COLOR_MARCHA;
         DrawCircleLinesV(mouse, (float)(radio / METROS_POR_PIXEL) * camara.zoom, c);
     }
@@ -583,6 +615,11 @@ void Mapa::manejarMapa() {
         if (fueClic) {
             if (herramienta == NAVEGAR) {
                 if (sedeBajoMouse != -1) asignarSede(e.sede(sedeBajoMouse), campoActivo);
+            } else if (herramienta == CERRAR_ESTACION) {
+                if (estacionBajoMouse != -1) {
+                    alternarEstacion(estacionBajoMouse);
+                    contingenciasCambiaron();
+                }
             } else {
                 Punto p = aPunto(GetScreenToWorld2D(mouse, camara));
                 int zona = e.zonaEn(p);
@@ -636,6 +673,7 @@ void Mapa::manejarTeclado() {
     if (IsKeyPressed(KEY_N)) herramienta = NAVEGAR;
     if (IsKeyPressed(KEY_M)) herramienta = PONER_MARCHA;
     if (IsKeyPressed(KEY_B)) herramienta = PONER_BLOQUEO;
+    if (IsKeyPressed(KEY_E)) herramienta = CERRAR_ESTACION;
     if (IsKeyPressed(KEY_F)) encuadrarSedes();
     if (IsKeyPressed(KEY_R)) revisarArchivos(true);
     if (IsKeyPressed(KEY_LEFT)) cambiarHora(e.hora() - 30);
@@ -757,10 +795,13 @@ void Mapa::panelIzquierdo() {
     // Contingencias
     texto("Contingencias (clic en el mapa)", x, y, 15, TEXTO_SUAVE);
     y += 22;
-    Rectangle h1 = {x, y, tercio, 28}, h2 = {x + tercio + 6, y, tercio, 28}, h3 = {x + 2 * (tercio + 6), y, tercio, 28};
+    float cuarto = (w - 18) / 4;
+    Rectangle h1 = {x, y, cuarto, 28}, h2 = {x + cuarto + 6, y, cuarto, 28};
+    Rectangle h3 = {x + 2 * (cuarto + 6), y, cuarto, 28}, h4 = {x + 3 * (cuarto + 6), y, cuarto, 28};
     if (boton(h1, "Navegar", herramienta == NAVEGAR, OSCURO)) herramienta = NAVEGAR;
     if (boton(h2, "Marcha", herramienta == PONER_MARCHA, COLOR_MARCHA)) herramienta = PONER_MARCHA;
     if (boton(h3, "Bloqueo", herramienta == PONER_BLOQUEO, COLOR_BLOQUEO)) herramienta = PONER_BLOQUEO;
+    if (boton(h4, "Estación", herramienta == CERRAR_ESTACION, COLOR_TM)) herramienta = CERRAR_ESTACION;
     y += 34;
     Rectangle rMenos = {x, y, 30, 28}, rMas = {x + 130, y, 30, 28}, quitar = {x + 170, y, w - 170, 28};
     if (boton(rMenos, "-", false, TEXTO) && radio > 100) radio -= 100;
@@ -770,7 +811,7 @@ void Mapa::panelIzquierdo() {
     if (boton(quitar, "Quitar del mapa", false, TEXTO)) {
         e.quitarEventos(false);
         contingenciasCambiaron();
-        avisar("Se quitaron las zonas puestas con el mouse");
+        avisar("Se quitaron los eventos puestos con el mouse");
     }
     y += 34;
 
@@ -1007,7 +1048,9 @@ void Mapa::pestanaHorario(float x, float y, float w, float alto) {
 void Mapa::ejecutar(const std::string& captura) {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
     InitWindow(1600, 900, "Rutas Inter-Sedes - Universidad Distrital");
-    SetWindowMinSize(1200, 700);
+    SetWindowMinSize(1200, 640);
+    int monitor = GetCurrentMonitor();   // en una pantalla pequena la ventana se abre maximizada
+    if (GetMonitorWidth(monitor) < 1600 || GetMonitorHeight(monitor) < 1000) MaximizeWindow();
     SetExitKey(KEY_NULL);
     SetTargetFPS(60);
 

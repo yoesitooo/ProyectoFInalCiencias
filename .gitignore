@@ -11,8 +11,8 @@ __pycache__/
 # Capturas de prueba (enrutador.exe --captura)
 /captura*.png
 
-# Guia de la sustentacion (solo local)
-docs/
+# Guia larga de estudio (solo local)
+docs/guia_completa.html
 
 # Editor
 .vscode/

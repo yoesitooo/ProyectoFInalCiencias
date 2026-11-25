@@ -1,0 +1,113 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sustentación Rutas Inter-Sedes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Space+Grotesk:wght@600;700&display=swap">
+<style>
+/* Layout: una columna, un bloque por turno de palabra */
+:root {
+  --bg: #F3F6FA; --surface: #FFFFFF; --ink: #142032; --muted: #586579; --line: #D6DEE8; --code: #EDF1F6;
+  --seb: #0B7A74; --seb-soft: #DDF1EE; --jhoe: #A94E08; --jhoe-soft: #FBEADB;
+  --display: "Space Grotesk", "Segoe UI", sans-serif; --body: "Inter", "Segoe UI", sans-serif; --mono: "JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0E141E; --surface: #161F2D; --ink: #E4EAF2; --muted: #9AA6B8; --line: #2A3546; --code: #0F1723; --seb: #45C3B6; --seb-soft: #12312F; --jhoe: #F0A24A; --jhoe-soft: #3A2814; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0E141E; --surface: #161F2D; --ink: #E4EAF2; --muted: #9AA6B8; --line: #2A3546; --code: #0F1723; --seb: #45C3B6; --seb-soft: #12312F; --jhoe: #F0A24A; --jhoe-soft: #3A2814; color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font: 16.5px/1.65 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px;
+}
+main { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.25; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(1.7rem, 5vw, 2.2rem); }
+h2 { font-size: 1.2rem; }
+h3 { font-size: 1rem; }
+p, ol { margin: 0; }
+ol { padding-left: 1.25em; display: flex; flex-direction: column; gap: 8px; }
+code { font: 0.86em var(--mono); background: var(--code); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+article { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+header { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: space-between; align-items: baseline; }
+.q { font: 600 0.85rem var(--display); padding: 3px 11px; border-radius: 999px; background: var(--seb-soft); color: var(--seb); white-space: nowrap; }
+.q.j { background: var(--jhoe-soft); color: var(--jhoe); }
+.sub, .hacer { color: var(--muted); }
+.hacer { font-size: 0.94rem; }
+.est { border-top: 1px solid var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+</style>
+</head><body>
+<main>
+<div>
+  <h1>Guion de la sustentación</h1>
+  <p class="sub">Unos 10 minutos. Lo que va entre comillas se dice; lo gris se hace en pantalla.</p>
+</div>
+
+<article>
+  <header><h2>1. La idea general</h2><span class="q">Sebastián · 1 min</span></header>
+  <p class="hacer">Tener el programa abierto.</p>
+  <p>"Nuestro proyecto calcula la ruta más rápida entre las sedes de la Distrital y la Sede S de la ECCI. Funciona en carro, moto, bici, a pie y TransMilenio, sobre las calles reales de Bogotá.</p>
+  <p>Vemos la ciudad como un <b>grafo</b>. Los cruces de calles, las sedes y las estaciones son los vértices. Cada tramo de calle entre dos cruces es una arista.</p>
+  <p>El grafo es <b>dirigido</b> porque hay calles de un solo sentido: una calle doble se guarda como dos aristas, una por sentido. Es <b>ponderado</b> porque cada arista tiene un peso, que para nosotros es el tiempo en minutos. Si hay una marcha, ese tramo tarda más y el programa busca otro camino. Está hecho en C++, y la ventana se dibuja con la librería raylib."</p>
+</article>
+
+<article>
+  <header><h2>2. Cómo obtuvimos los datos</h2><span class="q j">Jhoe · 1 min</span></header>
+  <p class="hacer">Mostrar la carpeta <code>datos</code> y abrir <code>tramos.csv</code>.</p>
+  <p>"Las calles, ciclorrutas y estaciones salen de <b>OpenStreetMap</b>, un mapa libre. Con un script de Python, aparte del programa, se descargaron y limpiaron una vez y quedaron en archivos de texto CSV. El programa no usa Python: lee esos archivos línea por línea y separa los campos por punto y coma.</p>
+  <p>Por ejemplo, esta línea dice que el tramo va de un cruce a otro, mide 226 metros y es una vía terciaria. Dice que de ida pueden pasar carro, bici y peatón, que de vuelta solo el peatón, y que se llama Calle 22.</p>
+  <p>No pusimos un nodo en cada esquina: solo usamos vías principales, peatonales y ciclorrutas. Quedaron unos <b>15 mil vértices y 45 mil aristas</b>."</p>
+</article>
+
+<article>
+  <header><h2>3. Qué hace: demo</h2><span class="q j">Jhoe · 2 min</span></header>
+  <ol>
+    <li><span class="hacer">Ingeniería → Tecnológica, en carro.</span> "Da la ruta más rápida, dos alternativas y las indicaciones calle por calle."</li>
+    <li><span class="hacer">Tecla 5.</span> "En TransMilenio dice en qué estación subirse, qué servicio tomar y dónde bajarse."</li>
+    <li><span class="hacer">Tecla 1, tecla M y clic sobre la ruta.</span> "Pongo una marcha y la ruta se desvía. También hay bloqueos y se pueden cerrar estaciones." <span class="hacer">Clic en el círculo para quitarla.</span></li>
+    <li><span class="hacer">Espacio unos segundos y otra vez para detener.</span> "Simula el día: el tráfico cambia con la hora. En carro son unos 24 minutos a las 3 a. m. y unos 54 a las 6 p. m."</li>
+    <li><span class="hacer">Pestaña Mi horario.</span> "Y con el horario de clases dice en qué modos se llega a tiempo a la otra sede."</li>
+  </ol>
+</article>
+
+<article>
+  <header><h2>4. Las estructuras de datos</h2><span class="q">Sebastián · 2 min y medio</span></header>
+  <p>"Todas las estructuras las hicimos nosotros. De C++ solo usamos los textos y la lectura de archivos, ningún contenedor como <code>vector</code> o <code>map</code>."</p>
+
+  <div class="est"><h3>Grafo con listas de adyacencia</h3>
+    <p class="hacer">Abrir <code>Grafo.h</code>.</p>
+    <p>"Es un arreglo de vértices. Cada vértice tiene una lista enlazada con sus aristas, y cada arista dice a qué vértice llega, cuántos metros mide y quién puede pasar.</p>
+    <p>Agregar una arista es O(1) porque entra al inicio de la lista. No usamos una matriz porque con 15 mil vértices serían más de 200 millones de casillas, casi todas vacías. Con listas solo se guardan las aristas que existen."</p></div>
+
+  <div class="est"><h3>Tabla hash</h3>
+    <p class="hacer">Abrir <code>TablaHash.cpp</code>, línea 26.</p>
+    <p>"Sirve para encontrar rápido un lugar por su nombre: por ejemplo, de 'Ricaurte' sacar el número de su vértice sin recorrer los 15 mil.</p>
+    <p>El nombre se convierte en un número: por cada letra, se multiplica por 31 y se suma la letra. Ese número se divide entre la cantidad de casillas, y el residuo dice en qué casilla buscar. Para 'Ricaurte' da la casilla 17,285.</p>
+    <p>Si dos nombres caen en la misma casilla, quedan en una lista dentro de ella; eso se llama encadenamiento. Cuando la tabla se llena más del 75 %, se crea una del doble y se reubican los nombres. Así cada búsqueda revisa en promedio 1.2 nombres: es O(1) en promedio."</p></div>
+
+  <div class="est"><h3>Min-Heap</h3>
+    <p class="hacer">Abrir <code>MinHeap.cpp</code>, líneas 26 y 74.</p>
+    <p>"Es una cola de prioridad: siempre entrega el elemento más pequeño. Dijkstra la usa para sacar el vértice al que se llega en menos tiempo.</p>
+    <p>Se guarda como un árbol en un arreglo: los hijos de la posición i están en 2i+1 y 2i+2, y cada padre es menor que sus hijos. Así el mínimo siempre está en la posición cero. Al sacarlo, el último sube a la raíz y baja hasta su lugar, en O(log V).</p>
+    <p>Además guardamos un arreglo <code>pos</code> que dice en qué posición está cada vértice. Cuando Dijkstra encuentra un camino más corto a un vértice que ya está en el heap, lo ubica directo con <code>pos</code> y lo sube. Esa operación se llama disminuir clave."</p></div>
+
+  <div class="est"><h3>Pila y arreglo dinámico</h3>
+    <p>"Dijkstra guarda, para cada vértice, desde dónde se llegó a él. Recorriendo eso, la ruta sale al revés, del destino al origen. Por eso la metemos en una <b>pila</b>: lo último que entra es lo primero que sale, y al sacarla queda en orden.</p>
+    <p>El <b>arreglo dinámico</b> reemplaza a <code>vector</code>: cuando se llena, pide uno del doble de tamaño y copia todo. Como pasa pocas veces, agregar cuesta O(1) en promedio."</p></div>
+</article>
+
+<article>
+  <header><h2>5. Cómo se calcula la ruta</h2><span class="q j">Jhoe · 2 min</span></header>
+  <p class="hacer">Abrir <code>Enrutador.cpp</code>, línea 132 y luego la 171.</p>
+  <p>"El peso de cada tramo es <b>metros entre velocidad</b>. La velocidad depende del tipo de vía, del modo y de la hora. Por ejemplo, 1000 metros en una vía terciaria a 26 km/h son 2.3 minutos, pero a las 7 de la mañana el carro va a la mitad y son 4.6. Si hay una marcha, ese tiempo se multiplica, por ejemplo por 6 en carro.</p>
+  <p>Con esos pesos usamos <b>Dijkstra</b>. Todos los vértices empiezan en infinito y el origen en cero. Se saca del heap el vértice con menor tiempo y se revisan sus vecinos. Si pasando por él se llega más rápido a un vecino, se actualiza su tiempo. Cuando sale el destino, paramos, porque como ningún tiempo es negativo ya no puede mejorar.</p>
+  <p>Cuesta <b>O((V+E) log V)</b>: menos de un milisegundo en nuestro computador. Para las alternativas, hacemos más lentos los tramos de la ruta encontrada y buscamos otra vez. En TransMilenio, subirse al bus cuesta la espera, así que cada transbordo suma otra espera y Dijkstra los evita solo."</p>
+</article>
+
+<article>
+  <header><h2>6. Pruebas, límites y cierre</h2><span class="q">Sebastián · 1 min</span></header>
+  <p class="hacer">Ejecutar <code>enrutador.exe --pruebas</code> en una terminal.</p>
+  <p>"Estas son 25 pruebas automáticas. Revisan que cada estructura haga lo que debe. El arreglo crece y su copia es independiente. La pila saca al revés. El heap entrega en orden y baja claves. La hash encuentra 200 nombres después de crecer.</p>
+  <p>Para Dijkstra armamos un grafo de cuatro vértices que se puede resolver a mano. De madrugada la ruta tarda 4.6 minutos, a las 7 tarda el doble, y con una marcha se desvía por el otro lado.</p>
+  <p>El programa tiene límites. No están las calles de barrio: cada sede se une con una línea recta a la avenida más cercana. No incluye los buses del SITP. Y el tráfico por hora es una tabla que estimamos con las horas pico, no son datos medidos.</p>
+  <p>Gracias, quedamos atentos a sus preguntas."</p>
+</article>
+</main>
+</body></html>
